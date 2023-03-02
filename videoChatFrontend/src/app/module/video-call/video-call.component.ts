@@ -60,7 +60,7 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
     let data = navigator.mediaDevices
       .getUserMedia({
         audio: true,
-        video: true,
+        video: false, 
       })
       .then((stream: any) => {
         this.myVideoStream = stream;
@@ -73,33 +73,40 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
           const video = document.createElement('video');
 
           call.on('stream', (userVideoStream: any) => {
-            this.addVideoStream(video, userVideoStream);
+            console.log(this.userrIds);
+            this.addVideoStream(video, userVideoStream,this.userrIds);
           });
 
         });
       });
   }
 
-  addVideoStream(myVideo: any, stream: any) {
+  addVideoStream(myVideo: any, stream: any,userid:any='') {
     myVideo.srcObject = stream;
+    if(userid){
+      myVideo.setAttribute('id', userid);
+    }
     myVideo.addEventListener('loadedmetadata', () => {
       myVideo.play();
       document.getElementById('video-grid')?.appendChild(myVideo);
     });
   }
 
+  userrIds:any='';
   connectToNewUser = (userId: any, stream: any) => {
+    this.userrIds =userId;
+    console.log(this.userrIds);
     console.log('I call someone' + userId);
     let call = this.peer.call(userId, stream);
     const video = document.createElement('video');
     call.on('stream', (userVideoStream: any) => {
-      this.addVideoStream(video, userVideoStream);
+      this.addVideoStream(video, userVideoStream,userId);
     });
   };
 
   removeduserUser = (userId: any) => {
     console.log('I close ' + userId);
-    this.ngOnInit();
+    document.getElementById(userId)?.remove()
     // const video = document.createElement('video');
     // call.on('stream', (userVideoStream: any) => {
     //   this.addVideoStream(video, userVideoStream);
