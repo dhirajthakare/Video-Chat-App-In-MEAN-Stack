@@ -60,7 +60,7 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
     let data = navigator.mediaDevices
       .getUserMedia({
         audio: true,
-        video: false, 
+        video: true,
       })
       .then((stream: any) => {
         this.myVideoStream = stream;
