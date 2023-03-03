@@ -24,8 +24,8 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
   anotherid: any;
   mypeerid: any;
   ngOnInit(): void {
-    // this.userName = prompt('Enter your name');
-    this.userName = "dhiraj";
+    this.userName = prompt('Enter your name');
+    // this.userName = "dhiraj";
 
     this.getLatestConnectedUser();
     this.makePeerConnection();
@@ -52,7 +52,7 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
     });
 
     this.peer.on('open', (id: any) => {
-      console.log('my id is' + id);
+      console.log('my id is ' + id);
       this.socket.createRoom('dhirajroom', this.userName, id);
       // socket.emit("join-room", ROOM_ID, id, user);
     });
@@ -73,44 +73,27 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
           const video = document.createElement('video');
 
           call.on('stream', (userVideoStream: any) => {
-            console.log(this.userrIds);
-            this.addVideoStream(video, userVideoStream,this.userrIds);
+            this.addVideoStream(video, userVideoStream);
           });
-
         });
       });
   }
 
-  addVideoStream(myVideo: any, stream: any,userid:any='') {
+  addVideoStream(myVideo: any, stream: any) {
     myVideo.srcObject = stream;
-    if(userid){
-      myVideo.setAttribute('id', userid);
-    }
     myVideo.addEventListener('loadedmetadata', () => {
       myVideo.play();
       document.getElementById('video-grid')?.appendChild(myVideo);
     });
   }
 
-  userrIds:any='';
   connectToNewUser = (userId: any, stream: any) => {
-    this.userrIds =userId;
-    console.log(this.userrIds);
-    console.log('I call someone' + userId);
+    console.log('I call someone ' + userId);
     let call = this.peer.call(userId, stream);
     const video = document.createElement('video');
     call.on('stream', (userVideoStream: any) => {
-      this.addVideoStream(video, userVideoStream,userId);
+      this.addVideoStream(video, userVideoStream);
     });
-  };
-
-  removeduserUser = (userId: any) => {
-    console.log('I close ' + userId);
-    document.getElementById(userId)?.remove()
-    // const video = document.createElement('video');
-    // call.on('stream', (userVideoStream: any) => {
-    //   this.addVideoStream(video, userVideoStream);
-    // });
   };
 
   myVideoClass = 'fa fa-video-camera';
@@ -152,7 +135,6 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
   allMessage:any=[];
   getMessage(){
     this.socket.getMessage().subscribe((res:any)=>{
-      console.log(res);
       this.allMessage.push({
         "message":res.message,
         "userName":res.userName
@@ -166,13 +148,12 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
     this.socket.leaveRoom();
   }
   getleaveroomData(){
-    this.socket.getLeaveRoomuser().subscribe((res:any)=>{
+    this.socket.getLeaveRoomuser().subscribe(res=>{
       console.log(res);
-      this.removeduserUser(res.userId);
     })
   }
 
   ngOnDestroy(){
-    console.log("destroyee Componant");
+    console.log("Destroy Componant");
   }
 }

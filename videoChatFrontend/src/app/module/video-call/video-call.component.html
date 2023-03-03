@@ -30,8 +30,9 @@
           >
             <i [ngClass]="myAudioClass"></i>
           </div>
-          <div (click)="leaveRoom()" class="options__button background__red">
-            <i class="fa fa-sign-out"></i>          </div>
+          <!-- <div (click)="leaveRoom()" class="options__button background__red">
+            <i class="fa fa-sign-out"></i>
+          </div> -->
           <div id="showChat" class="options__button">
             <i class="fa fa-comment"></i>
           </div>
@@ -52,9 +53,12 @@
         <div class="messages">
           <div *ngFor="let item of allMessage" class="message">
             <b
-              ><i class="far fa-user-circle"></i> <span> {{item.userName ==  userName ? 'Me':item.userName }} </span>
+              ><i class="far fa-user-circle"></i>
+              <span>
+                {{ item.userName == userName ? "Me" : item.userName }}
+              </span>
             </b>
-            <span>{{item.message}}</span>
+            <span>{{ item.message }}</span>
           </div>
         </div>
       </div>
@@ -65,6 +69,7 @@
           [(ngModel)]="textMessage"
           autocomplete="off"
           placeholder="Type message here..."
+          (keyup.enter)="sendMessage()"
         />
         <div (click)="sendMessage()" id="send" class="options__button">
           <i class="fa fa-plus" aria-hidden="true"></i>
