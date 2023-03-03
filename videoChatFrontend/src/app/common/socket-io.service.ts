@@ -8,7 +8,7 @@ import { io } from 'socket.io-client'
 export class SocketIoService {
 
   constructor() { }
-    socket = io('https://backend-for-video-chat-app.onrender.com/');
+    socket = io(window.location.hostname != 'localhost'?"https://backend-for-video-chat-app.onrender.com/":'http://'+window.location.hostname+':3000');
 
     createRoom(ROOM_ID:any,userName:any,userId:any,){
       this.socket.emit('join-room',ROOM_ID,userName,userId)
