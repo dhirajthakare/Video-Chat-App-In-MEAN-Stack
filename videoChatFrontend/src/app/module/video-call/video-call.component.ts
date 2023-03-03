@@ -45,7 +45,7 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
 
   makePeerConnection() {
     this.peer = new Peer({
-      host: window.location.hostname,
+      host: window.location.hostname != 'localhost'?"backend-for-video-chat-app.onrender.com":window.location.hostname,
       port: window.location.hostname == 'localhost' ? '3000' : 443,
       path: '/peerjs',
       // debug: 3
