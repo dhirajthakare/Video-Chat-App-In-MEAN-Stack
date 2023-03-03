@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SocketIoService } from 'src/app/common/socket-io.service';
 declare var Peer: any;
 declare var Navigator: {
@@ -14,7 +14,7 @@ declare var navigator: Navigator;
   styleUrls: ['./video-call.component.scss'],
 })
 export class VideoCallComponent implements OnInit, AfterViewInit {
-  constructor(private socket: SocketIoService , private route:Router) {}
+  constructor(private socket: SocketIoService , private activerouter:ActivatedRoute) {}
 
   userName: any = '';
   peer: any;
@@ -53,7 +53,7 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
 
     this.peer.on('open', (id: any) => {
       console.log('my id is ' + id);
-      this.socket.createRoom('dhirajroom', this.userName, id);
+      this.socket.createRoom(this.activerouter.snapshot.params[''], this.userName, id);
       // socket.emit("join-room", ROOM_ID, id, user);
     });
 
