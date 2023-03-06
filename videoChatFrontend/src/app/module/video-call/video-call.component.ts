@@ -46,7 +46,7 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
   makePeerConnection() {
     this.peer = new Peer({
       host: window.location.hostname != 'localhost'?"backend-for-video-chat-app.onrender.com":window.location.hostname,
-      port: window.location.hostname == 'localhost' ? '3000' : 443,
+      port: window.location.hostname == 'localhost' ? '3040' : 443,
       path: '/peerjs',
       // debug: 3
     });
@@ -68,7 +68,9 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
         this.addVideoStream(this.myVideo, stream);
 
         this.peer.on('call', (call: any) => {
-          console.log('someone call me');
+          console.log(call);
+
+          console.log('someone call me ',call.peer);
           call.answer(stream);
           const video = document.createElement('video');
 
