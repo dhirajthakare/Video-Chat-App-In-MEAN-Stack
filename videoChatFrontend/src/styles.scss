@@ -1,11 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
+
+// for group chat
+
+// video {
+//   height: 300px;
+//   border-radius: 1rem;
+//   margin: 0.5rem;
+//   width: 400px;
+//   object-fit: cover;
+//   transform: rotateY(180deg);
+//   -webkit-transform: rotateY(180deg);
+//   -moz-transform: rotateY(180deg);
+// }
+
+// for video chat
+
 video {
-    height: 300px;
-    border-radius: 1rem;
-    margin: 0.5rem;
-    width: 400px;
-    object-fit: cover;
-    transform: rotateY(180deg);
-    -webkit-transform: rotateY(180deg);
-    -moz-transform: rotateY(180deg);
+  height: 560px;
+  margin: 0.5rem;
+  width: 100%;
+  object-fit: cover;
+}
+#currentUser {
+  height: 200px;
+  margin: 0.5rem;
+  // width: 400px;
+  object-fit: cover;
+  position: absolute;
+  top: 62%;
+  left: 50%;
+  background-color: white;
+  width: 300px;
+  border-radius: 0%;
 }

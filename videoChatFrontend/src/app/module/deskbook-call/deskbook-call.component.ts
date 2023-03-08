@@ -1,15 +1,14 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { SocketIoService } from 'src/app/common/socket-io.service';
 declare var Peer: any;
-declare var navigator: Navigator;
-
 @Component({
-  selector: 'app-video-call',
-  templateUrl: './video-call.component.html',
-  styleUrls: ['./video-call.component.scss'],
+  selector: 'app-deskbook-call',
+  templateUrl: './deskbook-call.component.html',
+  styleUrls: ['./deskbook-call.component.scss']
 })
-export class VideoCallComponent implements OnInit, AfterViewInit {
+export class DeskbookCallComponent implements OnInit {
+
   constructor(private socket: SocketIoService , private activerouter:ActivatedRoute) {}
 
   userName: any = '';
@@ -20,13 +19,14 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
   anotherid: any;
   mypeerid: any;
   ngOnInit(): void {
-    this.userName = prompt('Enter your name');
-    // this.userName = "dhiraj";
+    // this.userName = prompt('Enter your name');
+    this.userName = "dhiraj";
 
     this.getLatestConnectedUser();
     this.makePeerConnection();
     this.getMessage();
     this.getleaveroomData();
+    this.check();
   }
 
   ngAfterViewInit(): void {}
@@ -38,6 +38,7 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
       }
     });
   }
+  videoOn:any = true;
 
   makePeerConnection() {
     this.peer = new Peer({
@@ -49,10 +50,9 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
 
     this.peer.on('open', (id: any) => {
       console.log('my id is ' + id);
-      this.socket.createRoom(this.activerouter.snapshot.params[''], this.userName, id);
+      this.socket.createRoom(this.activerouter.snapshot.params['']?this.activerouter.snapshot.params['']:'room', this.userName, id);
       // socket.emit("join-room", ROOM_ID, id, user);
     });
-
     let data = navigator.mediaDevices
       .getUserMedia({
         audio: true,
@@ -61,7 +61,7 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
       .then((stream: any) => {
         this.myVideoStream = stream;
 
-        this.addVideoStream(this.myVideo, stream);
+        this.addVideoStream(this.myVideo, stream,'loginuser');
 
         this.peer.on('call', (call: any) => {
           console.log(call);
@@ -72,13 +72,18 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
 
           call.on('stream', (userVideoStream: any) => {
             this.addVideoStream(video, userVideoStream);
+            this.videoOn = false;
           });
         });
       });
   }
 
-  addVideoStream(myVideo: any, stream: any) {
+  addVideoStream(myVideo: any, stream: any,loginuser:any='') {
     myVideo.srcObject = stream;
+    if(loginuser){
+      myVideo.setAttribute('id','currentUser');
+    }
+    console.log(myVideo);
     myVideo.addEventListener('loadedmetadata', () => {
       myVideo.play();
       document.getElementById('video-grid')?.appendChild(myVideo);
@@ -91,6 +96,7 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
     const video = document.createElement('video');
     call.on('stream', (userVideoStream: any) => {
       this.addVideoStream(video, userVideoStream);
+      this.videoOn = false;
     });
   };
 
@@ -104,6 +110,7 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
     } else {
       this.myVideoStream.getVideoTracks()[0].enabled = true;
       this.myVideoClass = 'fa fa-video-camera';
+
     }
   }
   muteOrUnmuteAudio() {
@@ -154,4 +161,27 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
   ngOnDestroy(){
     console.log("Destroy Componant");
   }
+
+  name = 'Angular '
+  myWin:any = {}
+  open(){
+    this.myWin =  window.open('https://google.in','popup','width=300,height=300');
+    console.log(this.myWin);
+  }
+  check(){
+          console.log(this.myWin.closed)
+          if(this.myWin.closed){
+            window.close
+          }
+          var myrhis = this
+          var timer = setInterval(function () {
+            if (myrhis.myWin.closed) {
+                alert("closed");
+                clearInterval(timer);
+                window.location.reload(); // Refresh the parent page
+            }
+        }, 1000);
+
+  }
+
 }

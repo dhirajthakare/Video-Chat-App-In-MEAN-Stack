@@ -1,0 +1,78 @@
+<div class="mybody">
+    <div class="main">
+      <div class="main__left">
+        <div class="videos__group">
+          <div id="video-grid"></div>
+          <div *ngIf="videoOn" id="video-grid-before-call">
+            <div   class="d-flex btnPointer">
+                <div><img height="90" width="90" class="profileImgResize mx-2"  [src]="'/assets/profile.jpg' "></div>
+            </div>
+            <div   class="d-flex btnPointer">
+                <div class=""><p style="color: white;"> dhiraj Thakare ... </p></div>
+            </div>
+          </div>
+        </div>
+        <div class="options">
+          <div class="options__left">
+            <div
+              (click)="muteOrUnmuteVideo()"
+              id="stopVideo"
+              [ngClass]="myVideoClass.includes('slash') ? 'background__red' : ''"
+              class="options__button"
+            >
+              <i [ngClass]="myVideoClass"></i>
+            </div>
+            <div
+              (click)="muteOrUnmuteAudio()"
+              id="muteButton"
+              [ngClass]="myAudioClass.includes('slash') ? 'background__red' : ''"
+              class="options__button"
+            >
+              <i [ngClass]="myAudioClass"></i>
+            </div>
+            <div (click)="open()" class="options__button background__red">
+              <i class="fa fa-phone"></i>
+            </div>
+          </div>
+          <div class="options__right">
+            <div
+              (click)="sendVideoLink()"
+              id="inviteButton"
+              class="options__button"
+            >
+              <i class="fas fa-user-plus"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="main__right">
+        <div class="main__chat_window">
+          <div class="messages">
+            <div *ngFor="let item of allMessage" class="message">
+              <b
+                ><i class="far fa-user-circle"></i>
+                <span>
+                  {{ item.userName == userName ? "Me" : item.userName }}
+                </span>
+              </b>
+              <span>{{ item.message }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="main__message_container">
+          <input
+            id="chat_message"
+            type="text"
+            [(ngModel)]="textMessage"
+            autocomplete="off"
+            placeholder="Type message here..."
+            (keyup.enter)="sendMessage()"
+          />
+          <div (click)="sendMessage()" id="send" class="options__button">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
