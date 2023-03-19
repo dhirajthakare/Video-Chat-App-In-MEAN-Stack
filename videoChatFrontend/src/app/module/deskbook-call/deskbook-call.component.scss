@@ -8,9 +8,16 @@
   font-family: "Poppins", sans-serif;
 }
 
-* {
-  margin: 0;
-  padding: 0;
+// * {
+//   margin: 0;
+//   padding: 0;
+// }
+
+video {
+  height: 560px;
+  margin: 0.5rem;
+  width: 100%;
+  object-fit: cover;
 }
 
 .header {
@@ -50,9 +57,9 @@
 }
 
 .profileImgResize {
-    border-radius: 45px;
-    object-fit: cover;
-  }
+  border-radius: 45px;
+  object-fit: cover;
+}
 
 .options {
   padding: 1rem;
@@ -165,7 +172,6 @@
   left: 28px;
   color: #fff;
 }
-
 
 @media (max-width: 700px) {
   .main__right {

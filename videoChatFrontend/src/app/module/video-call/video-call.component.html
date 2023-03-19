@@ -29,14 +29,13 @@
             <i class="fa fa-comment"></i>
           </div>
         </div>
-        <div class="options__right">
-          <div
-            (click)="sendVideoLink()"
-            id="inviteButton"
-            class="options__button"
-          >
-            <i class="fas fa-user-plus"></i>
-          </div>
+        <div
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+          id="inviteButton"
+          class="options__button"
+        >
+          <i class="fas fa-user-plus"></i>
         </div>
       </div>
     </div>
@@ -50,7 +49,7 @@
                 {{ item.userName == userName ? "Me" : item.userName }}
               </span>
             </b>
-            <span>{{ item.message }}</span>
+            <span style="word-break: break-word">{{ item.message }}</span>
           </div>
         </div>
       </div>
@@ -64,8 +63,39 @@
           (keyup.enter)="sendMessage()"
         />
         <div (click)="sendMessage()" id="send" class="options__button">
-          <i class="fa fa-plus" aria-hidden="true"></i>
+          <i class="fa fa-paper-plane" aria-hidden="true"></i>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Meeting URL</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label"
+              >Copy this link and send it to people you want to meet with</label
+            >
+            <input readonly type="text" [(ngModel)]="copyURl" name="copyURl" class="form-control" id="recipient-name" />
+          </div>
+        </form>
       </div>
     </div>
   </div>

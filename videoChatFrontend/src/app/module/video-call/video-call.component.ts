@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SocketIoService } from 'src/app/common/socket-io.service';
 declare var Peer: any;
@@ -8,6 +8,7 @@ declare var navigator: Navigator;
   selector: 'app-video-call',
   templateUrl: './video-call.component.html',
   styleUrls: ['./video-call.component.scss'],
+  encapsulation:ViewEncapsulation.None
 })
 export class VideoCallComponent implements OnInit, AfterViewInit {
   constructor(private socket: SocketIoService , private activerouter:ActivatedRoute) {}
@@ -16,11 +17,13 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
   peer: any;
   myVideoStream: any;
   myVideo = document.createElement('video');
+  copyURl:any = window.location.href; 
 
   anotherid: any;
   mypeerid: any;
   ngOnInit(): void {
     this.userName = prompt('Enter your name');
+    this.myVideo.muted = true;
     // this.userName = "dhiraj";
 
     this.getLatestConnectedUser();
@@ -126,8 +129,10 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
 
   textMessage:any;
   sendMessage(){
-    this.socket.sendmessage(this.textMessage);
-    this.textMessage = '';
+    if (this.textMessage) {
+      this.socket.sendmessage(this.textMessage);
+      this.textMessage = '';
+    }
   }
 
   allMessage:any=[];

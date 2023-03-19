@@ -1,78 +1,116 @@
 <div class="mybody">
-    <div class="main">
-      <div class="main__left">
-        <div class="videos__group">
-          <div id="video-grid"></div>
-          <div *ngIf="videoOn" id="video-grid-before-call">
-            <div   class="d-flex btnPointer">
-                <div><img height="90" width="90" class="profileImgResize mx-2"  [src]="'/assets/profile.jpg' "></div>
-            </div>
-            <div   class="d-flex btnPointer">
-                <div class=""><p style="color: white;"> dhiraj Thakare ... </p></div>
-            </div>
-          </div>
-        </div>
-        <div class="options">
-          <div class="options__left">
-            <div
-              (click)="muteOrUnmuteVideo()"
-              id="stopVideo"
-              [ngClass]="myVideoClass.includes('slash') ? 'background__red' : ''"
-              class="options__button"
-            >
-              <i [ngClass]="myVideoClass"></i>
-            </div>
-            <div
-              (click)="muteOrUnmuteAudio()"
-              id="muteButton"
-              [ngClass]="myAudioClass.includes('slash') ? 'background__red' : ''"
-              class="options__button"
-            >
-              <i [ngClass]="myAudioClass"></i>
-            </div>
-            <div (click)="open()" class="options__button background__red">
-              <i class="fa fa-phone"></i>
+  <div class="main">
+    <div class="main__left">
+      <div class="videos__group">
+        <div id="video-grid"></div>
+        <div *ngIf="videoOn" id="video-grid-before-call">
+          <div class="d-flex btnPointer">
+            <div>
+              <img
+                height="90"
+                width="90"
+                class="profileImgResize mx-2"
+                [src]="'/assets/profile.jpg'"
+              />
             </div>
           </div>
-          <div class="options__right">
-            <div
-              (click)="sendVideoLink()"
-              id="inviteButton"
-              class="options__button"
-            >
-              <i class="fas fa-user-plus"></i>
-            </div>
+          <div class="d-flex btnPointer">
+            <div class=""><p style="color: white">dhiraj Thakare ...</p></div>
           </div>
         </div>
       </div>
-      <div class="main__right">
-        <div class="main__chat_window">
-          <div class="messages">
-            <div *ngFor="let item of allMessage" class="message">
-              <b
-                ><i class="far fa-user-circle"></i>
-                <span>
-                  {{ item.userName == userName ? "Me" : item.userName }}
-                </span>
-              </b>
-              <span>{{ item.message }}</span>
-            </div>
+      <div class="options">
+        <div class="options__left">
+          <div
+            (click)="muteOrUnmuteVideo()"
+            id="stopVideo"
+            [ngClass]="myVideoClass.includes('slash') ? 'background__red' : ''"
+            class="options__button"
+          >
+            <i [ngClass]="myVideoClass"></i>
+          </div>
+          <div
+            (click)="muteOrUnmuteAudio()"
+            id="muteButton"
+            [ngClass]="myAudioClass.includes('slash') ? 'background__red' : ''"
+            class="options__button"
+          >
+            <i [ngClass]="myAudioClass"></i>
+          </div>
+          <div (click)="open()" class="options__button background__red">
+            <i class="fa fa-phone"></i>
           </div>
         </div>
-        <div class="main__message_container">
-          <input
-            id="chat_message"
-            type="text"
-            [(ngModel)]="textMessage"
-            autocomplete="off"
-            placeholder="Type message here..."
-            (keyup.enter)="sendMessage()"
-          />
-          <div (click)="sendMessage()" id="send" class="options__button">
-            <i class="fa fa-plus" aria-hidden="true"></i>
+        <div class="options__right">
+          <div
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            id="inviteButton"
+            class="options__button"
+          >
+            <i class="fas fa-user-plus"></i>
           </div>
         </div>
       </div>
     </div>
+    <div class="main__right">
+      <div class="main__chat_window">
+        <div class="messages">
+          <div *ngFor="let item of allMessage" class="message">
+            <b
+              ><i class="far fa-user-circle"></i>
+              <span>
+                {{ item.userName == userName ? "Me" : item.userName }}
+              </span>
+            </b>
+            <span style="word-break: break-word">{{ item.message }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="main__message_container">
+        <input
+          id="chat_message"
+          type="text"
+          [(ngModel)]="textMessage"
+          autocomplete="off"
+          placeholder="Type message here..."
+          (keyup.enter)="sendMessage()"
+        />
+        <div (click)="sendMessage()" id="send" class="options__button">
+          <i class="fa fa-paper-plane" aria-hidden="true"></i>
+        </div>
+      </div>
+    </div>
   </div>
-  
+</div>
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Meeting URL</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label"
+              >Copy this link and send it to people you want to meet with</label
+            >
+            <input readonly type="text" [(ngModel)]="copyURl" name="copyURl" class="form-control" id="recipient-name" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
