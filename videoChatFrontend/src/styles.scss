@@ -1,8 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
-// for group chat
-
-#currentUser {
+.myCallbody #currentUser {
   height: 200px;
   margin: 0.5rem;
   // width: 400px;
@@ -13,4 +11,22 @@
   background-color: white;
   width: 300px;
   border-radius: 0%;
+}
+
+.myCallbody video {
+  height: 560px;
+  margin: 0.5rem;
+  width: 100%;
+  object-fit: cover;
+}
+
+.mygroupcallbody video {
+  height: 300px;
+  border-radius: 1rem;
+  margin: 0.5rem;
+  width: 400px;
+  object-fit: cover;
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
 }

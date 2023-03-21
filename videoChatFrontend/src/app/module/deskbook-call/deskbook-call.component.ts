@@ -1,12 +1,12 @@
-import { Component, HostListener, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SocketIoService } from 'src/app/common/socket-io.service';
 declare var Peer: any;
+
 @Component({
   selector: 'app-deskbook-call',
   templateUrl: './deskbook-call.component.html',
   styleUrls: ['./deskbook-call.component.scss'],
-  encapsulation:ViewEncapsulation.None
 })
 export class DeskbookCallComponent implements OnInit {
   constructor(
@@ -21,7 +21,7 @@ export class DeskbookCallComponent implements OnInit {
 
   anotherid: any;
   mypeerid: any;
-  copyURl:any = window.location.href; 
+  copyURl: any = window.location.href;
   ngOnInit(): void {
     // this.userName = prompt('Enter your name');
     this.userName = 'dhiraj';

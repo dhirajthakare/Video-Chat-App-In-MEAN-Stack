@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
-.mybody {
+.mygroupcallbody {
   --main-darklg: #1d2635;
   --main-dark: #161d29;
   --primary-color: #2f80ec;
@@ -12,17 +12,6 @@
 //   margin: 0;
 //   padding: 0;
 // }
-
-video {
-  height: 300px;
-  border-radius: 1rem;
-  margin: 0.5rem;
-  width: 400px;
-  object-fit: cover;
-  transform: rotateY(180deg);
-  -webkit-transform: rotateY(180deg);
-  -moz-transform: rotateY(180deg);
-}
 
 .header {
   display: flex;
@@ -59,7 +48,6 @@ video {
   padding: 1rem;
   background-color: var(--main-dark);
 }
-
 
 .options {
   padding: 1rem;

@@ -1,23 +1,24 @@
-import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SocketIoService } from 'src/app/common/socket-io.service';
 declare var Peer: any;
-declare var navigator: Navigator;
 
 @Component({
   selector: 'app-video-call',
   templateUrl: './video-call.component.html',
   styleUrls: ['./video-call.component.scss'],
-  encapsulation:ViewEncapsulation.None
 })
 export class VideoCallComponent implements OnInit, AfterViewInit {
-  constructor(private socket: SocketIoService , private activerouter:ActivatedRoute) {}
+  constructor(
+    private socket: SocketIoService,
+    private activerouter: ActivatedRoute
+  ) {}
 
   userName: any = '';
   peer: any;
   myVideoStream: any;
   myVideo = document.createElement('video');
-  copyURl:any = window.location.href; 
+  copyURl: any = window.location.href;
 
   anotherid: any;
   mypeerid: any;
@@ -44,7 +45,10 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
 
   makePeerConnection() {
     this.peer = new Peer({
-      host: window.location.hostname != 'localhost'?"backend-for-video-chat-app.onrender.com":window.location.hostname,
+      host:
+        window.location.hostname != 'localhost'
+          ? 'backend-for-video-chat-app.onrender.com'
+          : window.location.hostname,
       port: window.location.hostname == 'localhost' ? '3040' : 443,
       path: '/peerjs',
       // debug: 3
@@ -52,7 +56,11 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
 
     this.peer.on('open', (id: any) => {
       console.log('my id is ' + id);
-      this.socket.createRoom(this.activerouter.snapshot.params[''], this.userName, id);
+      this.socket.createRoom(
+        this.activerouter.snapshot.params[''],
+        this.userName,
+        id
+      );
       // socket.emit("join-room", ROOM_ID, id, user);
     });
 
@@ -69,7 +77,7 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
         this.peer.on('call', (call: any) => {
           console.log(call);
 
-          console.log('someone call me ',call.peer);
+          console.log('someone call me ', call.peer);
           call.answer(stream);
           const video = document.createElement('video');
 
@@ -127,36 +135,35 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
     );
   }
 
-  textMessage:any;
-  sendMessage(){
+  textMessage: any;
+  sendMessage() {
     if (this.textMessage) {
       this.socket.sendmessage(this.textMessage);
       this.textMessage = '';
     }
   }
 
-  allMessage:any=[];
-  getMessage(){
-    this.socket.getMessage().subscribe((res:any)=>{
+  allMessage: any = [];
+  getMessage() {
+    this.socket.getMessage().subscribe((res: any) => {
       this.allMessage.push({
-        "message":res.message,
-        "userName":res.userName
-      }) ;
-    })
-
+        message: res.message,
+        userName: res.userName,
+      });
+    });
   }
 
-  leaveRoom(){
+  leaveRoom() {
     // this.route.navigate(['chat']);
     this.socket.leaveRoom();
   }
-  getleaveroomData(){
-    this.socket.getLeaveRoomuser().subscribe(res=>{
+  getleaveroomData() {
+    this.socket.getLeaveRoomuser().subscribe((res) => {
       console.log(res);
-    })
+    });
   }
 
-  ngOnDestroy(){
-    console.log("Destroy Componant");
+  ngOnDestroy() {
+    console.log('Destroy Componant');
   }
 }
