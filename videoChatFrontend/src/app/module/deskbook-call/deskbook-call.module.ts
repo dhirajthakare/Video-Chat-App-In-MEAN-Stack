@@ -4,11 +4,13 @@ import { CommonModule } from '@angular/common';
 import { DeskbookCallRoutingModule } from './deskbook-call-routing.module';
 import { DeskbookCallComponent } from './deskbook-call.component';
 import { FormsModule } from '@angular/forms';
+import { AcceptCallComponent } from './accept-call/accept-call.component';
 
 
 @NgModule({
   declarations: [
-    DeskbookCallComponent
+    DeskbookCallComponent,
+    AcceptCallComponent
   ],
   imports: [
     CommonModule,

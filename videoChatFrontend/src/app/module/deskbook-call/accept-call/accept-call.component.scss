@@ -1,0 +1,25 @@
+.profileImgResize {
+    border-radius: 30px;
+    object-fit: cover;
+  }
+  
+  .mybtn {
+    display: block;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    border: 1px solid white;
+  }
+  
+  .mycallmodel {
+    width: 20%;
+    margin-inline: 2%;
+  }
+  
+  @media (max-width: 769px) {
+    .mycallmodel {
+      width: 100%;
+      margin-inline: 2%;
+    }
+  }
+  
