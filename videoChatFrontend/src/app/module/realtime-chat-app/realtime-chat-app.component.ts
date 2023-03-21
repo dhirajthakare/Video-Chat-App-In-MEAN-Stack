@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-realtime-chat-app',
   templateUrl: './realtime-chat-app.component.html',
-  styleUrls: ['./realtime-chat-app.component.scss']
+  styleUrls: ['./realtime-chat-app.component.scss'],
 })
 export class RealtimeChatAppComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
+  ngOnInit(): void {}
+  @HostListener('window:beforeunload', ['$event'])
+  beforeunloadHandler(event: any) {
+    // execute code which call when browser tab close
   }
-
 }
