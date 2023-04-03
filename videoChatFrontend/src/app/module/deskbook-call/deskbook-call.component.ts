@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SocketIoService } from 'src/app/common/socket-io.service';
 declare var Peer: any;
 
@@ -11,7 +11,8 @@ declare var Peer: any;
 export class DeskbookCallComponent implements OnInit {
   constructor(
     private socket: SocketIoService,
-    private activerouter: ActivatedRoute
+    private activerouter: ActivatedRoute,
+    private route:Router
   ) {}
 
   userName: any = '';
@@ -24,13 +25,13 @@ export class DeskbookCallComponent implements OnInit {
   copyURl: any = window.location.href;
   ngOnInit(): void {
     // this.userName = prompt('Enter your name');
-    this.userName = 'dhiraj';
+    this.userName = prompt("select name");
     this.myVideo.muted = true;
     this.getLatestConnectedUser();
     this.makePeerConnection();
     this.getMessage();
     this.getleaveroomData();
-    this.check();
+    // this.check();
   }
 
   ngAfterViewInit(): void {}
@@ -84,7 +85,7 @@ export class DeskbookCallComponent implements OnInit {
           const video = document.createElement('video');
 
           call.on('stream', (userVideoStream: any) => {
-            this.addVideoStream(video, userVideoStream);
+            this.addVideoStream(video, userVideoStream,call.peer);
             this.videoOn = false;
           });
         });
@@ -93,13 +94,16 @@ export class DeskbookCallComponent implements OnInit {
 
   addVideoStream(myVideo: any, stream: any, loginuser: any = '') {
     myVideo.srcObject = stream;
-    if (loginuser) {
+    if (loginuser == "loginuser") {
       myVideo.setAttribute('id', 'currentUser');
     }
-    console.log(myVideo);
+    if(loginuser && loginuser != "loginuser"){
+      myVideo.setAttribute('id', loginuser);
+    }
     myVideo.addEventListener('loadedmetadata', () => {
       myVideo.play();
       document.getElementById('video-grid')?.appendChild(myVideo);
+      console.log(document.getElementById('video-grid'));
     });
   }
 
@@ -108,7 +112,7 @@ export class DeskbookCallComponent implements OnInit {
     let call = this.peer.call(userId, stream);
     const video = document.createElement('video');
     call.on('stream', (userVideoStream: any) => {
-      this.addVideoStream(video, userVideoStream);
+      this.addVideoStream(video, userVideoStream,userId);
       this.videoOn = false;
     });
   };
@@ -165,16 +169,20 @@ export class DeskbookCallComponent implements OnInit {
   leaveRoom() {
     // this.route.navigate(['chat']);
     this.socket.leaveRoom();
+    this.route.navigate(['']);
   }
   getleaveroomData() {
     this.socket.getLeaveRoomuser().subscribe((res) => {
       console.log(res);
+      const element = document.getElementById(res.userId);
+      element?.remove();
+      this.route.navigate(['']);
     });
   }
 
-  ngOnDestroy() {
-    console.log('Destroy Componant');
-  }
+  // ngOnDestroy() {
+  //   console.log('Destroy Componant');
+  // }
 
   name = 'Angular ';
   myWin: any = {};
