@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SocketIoService } from 'src/app/common/socket-io.service';
+import { environment } from 'src/environments/environment';
 declare var Peer: any;
 
 @Component({
@@ -12,7 +13,7 @@ export class DeskbookCallComponent implements OnInit {
   constructor(
     private socket: SocketIoService,
     private activerouter: ActivatedRoute,
-    private route:Router
+    private route: Router
   ) {}
 
   userName: any = '';
@@ -25,7 +26,7 @@ export class DeskbookCallComponent implements OnInit {
   copyURl: any = window.location.href;
   ngOnInit(): void {
     // this.userName = prompt('Enter your name');
-    this.userName = prompt("select name");
+    this.userName = prompt('select name');
     this.myVideo.muted = true;
     this.getLatestConnectedUser();
     this.makePeerConnection();
@@ -49,9 +50,12 @@ export class DeskbookCallComponent implements OnInit {
     this.peer = new Peer({
       host:
         window.location.hostname != 'localhost'
-          ? 'backend-for-video-chat-app.onrender.com'
-          : window.location.hostname,
-      port: window.location.hostname == 'localhost' ? '3040' : 443,
+          ? environment.ServerDomain
+          : environment.LocalServerDomain,
+      port:
+        window.location.hostname == 'localhost'
+          ? environment.LocalServerPort
+          : environment.ServerPort,
       path: '/peerjs',
       // debug: 3
     });
@@ -85,7 +89,7 @@ export class DeskbookCallComponent implements OnInit {
           const video = document.createElement('video');
 
           call.on('stream', (userVideoStream: any) => {
-            this.addVideoStream(video, userVideoStream,call.peer);
+            this.addVideoStream(video, userVideoStream, call.peer);
             this.videoOn = false;
           });
         });
@@ -94,10 +98,10 @@ export class DeskbookCallComponent implements OnInit {
 
   addVideoStream(myVideo: any, stream: any, loginuser: any = '') {
     myVideo.srcObject = stream;
-    if (loginuser == "loginuser") {
+    if (loginuser == 'loginuser') {
       myVideo.setAttribute('id', 'currentUser');
     }
-    if(loginuser && loginuser != "loginuser"){
+    if (loginuser && loginuser != 'loginuser') {
       myVideo.setAttribute('id', loginuser);
     }
     myVideo.addEventListener('loadedmetadata', () => {
@@ -112,7 +116,7 @@ export class DeskbookCallComponent implements OnInit {
     let call = this.peer.call(userId, stream);
     const video = document.createElement('video');
     call.on('stream', (userVideoStream: any) => {
-      this.addVideoStream(video, userVideoStream,userId);
+      this.addVideoStream(video, userVideoStream, userId);
       this.videoOn = false;
     });
   };

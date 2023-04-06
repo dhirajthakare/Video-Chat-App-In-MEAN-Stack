@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SocketIoService } from 'src/app/common/socket-io.service';
+import { environment } from 'src/environments/environment';
 declare var Peer: any;
 
 @Component({
@@ -47,9 +48,12 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
     this.peer = new Peer({
       host:
         window.location.hostname != 'localhost'
-          ? 'backend-for-video-chat-app.onrender.com'
-          : window.location.hostname,
-      port: window.location.hostname == 'localhost' ? '3040' : 443,
+          ? environment.ServerDomain
+          : environment.LocalServerDomain,
+      port:
+        window.location.hostname == 'localhost'
+          ? environment.LocalServerPort
+          : environment.ServerPort,
       path: '/peerjs',
       // debug: 3
     });
