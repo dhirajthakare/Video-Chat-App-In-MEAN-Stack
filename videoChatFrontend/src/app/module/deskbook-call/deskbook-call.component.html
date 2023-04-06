@@ -1,8 +1,23 @@
-<div class="mygroupcallbody">
+<div class="myCallbody">
   <div class="main">
     <div class="main__left">
       <div class="videos__group">
         <div id="video-grid"></div>
+        <div *ngIf="videoOn" id="video-grid-before-call">
+          <div class="d-flex btnPointer">
+            <div>
+              <img
+                height="90"
+                width="90"
+                class="profileImgResize mx-2"
+                [src]="'/assets/profile.jpg'"
+              />
+            </div>
+          </div>
+          <div class="d-flex btnPointer">
+            <div class=""><p style="color: white">dhiraj Thakare ...</p></div>
+          </div>
+        </div>
       </div>
       <div class="options">
         <div class="options__left">
@@ -22,20 +37,19 @@
           >
             <i [ngClass]="myAudioClass"></i>
           </div>
-          <!-- <div (click)="leaveRoom()" class="options__button background__red">
-            <i class="fa fa-sign-out"></i>
-          </div> -->
-          <div id="showChat" class="options__button">
-            <i class="fa fa-comment"></i>
+          <div (click)="leaveRoom()" class="options__button background__red">
+            <i class="fa fa-phone"></i>
           </div>
         </div>
-        <div
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
-          id="inviteButton"
-          class="options__button"
-        >
-          <i class="fas fa-user-plus"></i>
+        <div class="options__right">
+          <div
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            id="inviteButton"
+            class="options__button"
+          >
+            <i class="fas fa-user-plus"></i>
+          </div>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
-.mygroupcallbody {
+.myCallbody {
   --main-darklg: #1d2635;
   --main-dark: #161d29;
   --primary-color: #2f80ec;
@@ -47,6 +47,11 @@
   align-items: center;
   padding: 1rem;
   background-color: var(--main-dark);
+}
+
+.profileImgResize {
+  border-radius: 45px;
+  object-fit: cover;
 }
 
 .options {
